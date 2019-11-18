@@ -1,3 +1,123 @@
-.page .topbar .logo {
-    background: red;
+body {
+    font-size: 0.3733rem;
+}
+
+section.topbar {
+    background-color: #d43c33;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.34rem;
+    padding: 20px 10px;
+}
+
+section.topbar .logo > svg {
+    width: 3.43rem;
+    height: 0.60rem;
+    vertical-align: top;
+}
+
+section.topbar a {
+    font-size: 0.39rem;
+    display: inline-block;
+    background-color: #fff;
+    color: #d43c33;
+    text-align: center;
+    border-radius: 37.5% / 100%;
+    line-height: 0.87rem;
+    padding: 0 0.39rem;
+}
+
+section.globalTabs {
+    font-size: 0.4rem;
+}
+
+section.globalTabs .tabs {
+    display: flex;
+    border-bottom: 1px solid #cccccc;
+}
+
+section.globalTabs .tabs li {
+    width: 33.333333%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.playlists {
+    margin: 0.5333rem 0 0.64rem;
+}
+
+section.playlists > h2 {
+    position: relative;
+    font-size: 0.4533rem;
+    line-height: 0.5333rem;
+    padding-left: 0.24rem;
+    margin-bottom: 0.16rem;
+}
+
+section.playlists > h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2px;
+    height: 100%;
+    background-color: #d43c33;
+}
+
+section.playlists > ol {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+section.playlists > ol > li {
+    width: 32.8%;
+    margin: 0.2133rem 0;
+}
+
+section.playlists > ol > li img {
+    width: 100%;
+}
+
+section.playlists > ol > li p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding: 0 0.16rem;
+}
+
+section.songs {
+}
+
+section.art {
+}
+
+.tabs li.active {
+    color: #d43c33;
+}
+
+.tabs li.active > .text {
+    position: relative;
+    line-height: 0.5333rem;
+    padding: 0.2667rem 0.1333rem;
+}
+
+.tabs li.active > .text::after {
+    content: '';
+    background-color: #d43c33;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+}
+
+.tab-content > li {
+    display: none;
+}
+
+.tab-content > li.active {
+    display: block;
 }
