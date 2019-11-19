@@ -7,11 +7,18 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    opacity: 1;
+    background-color: white;
+    z-index: 1;
 }
 
 .tab-content {
-    margin-top: 3.54rem;
+    margin-top: 2.992rem;
+}
+
+/*取消 margin 合并*/
+.tab-content .page-1::before {
+    content: '';
+    display: table;
 }
 
 section.topbar {
@@ -86,12 +93,23 @@ section.playlists > ol {
 }
 
 section.playlists > ol > li {
-    width: 32.8%;
     margin: 0.2133rem 0;
+    position: relative;
+    width: 32.8%;
+}
+
+section.playlists > ol > li .cover-wrapper {
+    width: 100%;
+    padding-top: 100%;
 }
 
 section.playlists > ol > li img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 100%;
+    height: auto;
 }
 
 section.playlists > ol > li p {
