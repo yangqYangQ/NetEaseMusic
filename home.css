@@ -120,6 +120,16 @@ section.playlists > ol > li p {
     padding: 0 0.16rem;
 }
 
+section.songs .list #songListLoading {
+    text-align: center;
+}
+
+section.songs .list img {
+    width: 0.533rem;
+    height: 0.533rem;
+    vertical-align: top;
+}
+
 section.songs .list li span, section.songs .list li p {
     color: #888;
 }
