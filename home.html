@@ -90,7 +90,7 @@
             <section class="songs">
                 <h2> 最新音乐 </h2>
                 <ol id=songList class="list">
-                    <div id="songListLoading">
+                    <div id="songListLoading" class="loading">
                         <img src="./vendors/svg-css-loaders/audio.svg"/>
                     </div>
                 </ol>
@@ -159,12 +159,29 @@
             </section>
         </li>
         <li class="page-2">page 2</li>
-        <li class="page-2">page 3</li>
+        <li class="page-3">
+            <div class="query">
+                <svg class="icon icon-query" aria-hidden="true">
+                    <use xlink:href="#icon-query"></use>
+                </svg>
+                <input id="inputSearch" type="text" autofocus placeholder="搜索歌曲、歌手、专辑">
+                <svg id="inputClear" class="icon icon-gary" aria-hidden="true">
+                    <use xlink:href="#icon-gary"></use>
+                </svg>
+            </div>
+            <ol id="queryResult" class="list"></ol>
+        </li>
     </ol>
 </div>
+<!--播放图标 symbol-->
 <script src="//at.alicdn.com/t/font_1516937_2n4m2b3rkmi.js"></script>
+<!--查询图标 symbol-->
+<script src="//at.alicdn.com/t/font_1516937_iws1pqj42c9.js"></script>
+<!--查询清楚图标 symbol-->
+<script src="//at.alicdn.com/t/font_1516937_q3cvvwczi.js"></script>
 <script src="./vendors/jquery.min.js"></script>
 <script src="./vendors/av-min.js"></script>
+<!--tab 切换-->
 <script>
     $('.tabs').on('click', 'li', function (e) {
         $li = $(e.currentTarget);
@@ -174,6 +191,8 @@
         content.addClass('active').siblings().removeClass('active');
     });
 </script>
+
+<!--最新音乐-->
 <script>
     $songList = $('ol#songList');
 
@@ -215,6 +234,8 @@
         console.error(error);
     });
 </script>
+
+<!--推荐歌单-->
 <script>
     $playlist = $('ol#playList');
 
@@ -243,6 +264,71 @@
     }).catch(function (error) {
         console.error(error);
     });
+</script>
+
+<!--搜索-->
+<script>
+    let $queryResult = $('#queryResult');
+    let timer = null;
+    $('#inputSearch').on('input', function (e) {
+        const value = e.currentTarget.value;
+        if (value === '') {
+            $('.tab-content li.page-3 .query .icon.icon-gary').removeClass('active');
+        } else {
+            $('.tab-content li.page-3 .query .icon.icon-gary').addClass('active');
+        }
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(querySongs.bind(null, value), 400);
+    })
+
+    function querySongs(queryString) {
+        $queryResult.empty();
+        if (queryString === '') return;
+
+        $queryResult.append(`
+            <div id="queryLoading" class="loading">
+                <img src="./vendors/svg-css-loaders/audio.svg"/>
+            </div>
+        `);
+
+        let query1 = new AV.Query('Song');
+        query1.contains('album', queryString);
+
+        let query2 = new AV.Query('Song');
+        query2.contains('name', queryString);
+
+        let query3 = new AV.Query('Song');
+        query3.contains('singer', queryString);
+
+        let query = AV.Query.or(query1, query2, query3);
+        query.find().then(function (songs) {
+            $('#queryLoading').remove();
+            for (let i = 0; i < songs.length; i++) {
+                const {name, singer, album, url} = songs[i].attributes;
+                const liString = `
+                    <li>
+                        <h3>${name}</h3>
+                        <p><i></i> ${singer} - ${album}</p>
+                        <a href=${url} target="_blank">
+                            <svg class="icon icon-play" aria-hidden="true">
+                                <use xlink:href="#icon-play"></use>
+                            </svg>
+                        </a>
+                    </li>
+            `;
+                $queryResult.append(liString);
+            }
+        });
+    }
+
+    $('#inputClear').on('click', function () {
+        $('#inputSearch').val('').focus();
+        $('.tab-content li.page-3 .query .icon.icon-gary').removeClass('active');
+        $queryResult.empty();
+    })
 </script>
 </body>
 </html>

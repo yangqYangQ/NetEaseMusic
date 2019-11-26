@@ -120,21 +120,21 @@ section.playlists > ol > li p {
     padding: 0 0.16rem;
 }
 
-section.songs .list #songListLoading {
+.list .loading {
     text-align: center;
 }
 
-section.songs .list img {
+.list img {
     width: 0.533rem;
     height: 0.533rem;
     vertical-align: top;
 }
 
-section.songs .list li span, section.songs .list li p {
+.list li span, .list li p {
     color: #888;
 }
 
-section.songs .list li h3 {
+.list li h3 {
     width: 8.6187rem;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -142,7 +142,7 @@ section.songs .list li h3 {
     overflow: hidden;
 }
 
-section.songs .list li p {
+.list li p {
     font-size: 0.32rem;
     width: 8.6187rem;
     display: -webkit-box;
@@ -151,7 +151,7 @@ section.songs .list li p {
     overflow: hidden;
 }
 
-section.songs .list li {
+.list li {
     line-height: 0.56rem;
     padding: 0.1707rem 0;
     position: relative;
@@ -159,7 +159,7 @@ section.songs .list li {
     border-bottom: 1px solid #f0f0f1;
 }
 
-section.songs .list li > a {
+.list li > a {
     position: absolute;
     right: 0.2667rem;
     top: 50%;
@@ -167,14 +167,14 @@ section.songs .list li > a {
     color: #aaa;
 }
 
-section.songs .list li .icon-play {
+.list li .icon-play {
     display: inline-block;
     width: 0.5867rem;
     height: 0.5867rem;
     vertical-align: middle;
 }
 
-section.songs ol.list li i {
+ol.list li i {
     background: transparent url("https://s3.music.126.net/mobile-new/img/index_icon_2x.png?5207a28c3767992ca4bb6d4887c74880=") no-repeat;
     width: 0.32rem;
     height: 0.213rem;
@@ -249,4 +249,60 @@ section.art .copyright {
 
 .tab-content > li.active {
     display: block;
+}
+
+/*搜索*/
+.tab-content li.page-3::before {
+    content: '';
+    display: table;
+}
+
+.tab-content li.page-3 .query {
+    text-align: center;
+    position: relative;
+    width: 355.2px;
+    padding: 0 30px;
+    margin: 15px auto;
+    border-radius: 15px;
+    background-color: #ebecec;
+}
+
+.tab-content li.page-3 input {
+    border: none;
+    outline: none;
+    padding: 7px 0;
+    width: 100%;
+    background-color: inherit;
+}
+
+.tab-content li.page-3 input::placeholder {
+    color: #cacbcb;
+}
+
+.tab-content li.page-3 .query .icon-query {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    transform: translateX(-50%) translateY(-50%);
+    width: 13px;
+    height: 13px;
+    color: #cfcfd0;
+}
+
+.tab-content li.page-3 .query .icon-gary {
+    display: none;
+}
+
+.tab-content li.page-3 .query .icon-gary.active {
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 15px;
+    right: 15px;
+    transform: translateX(50%) translateY(-50%);
+}
+
+.tab-content li.page-3 .list {
+    border-top: 1px solid #f0f0f1;
 }
