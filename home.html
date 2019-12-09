@@ -158,7 +158,21 @@
                 </div>
             </section>
         </li>
-        <li class="page-2">page 2</li>
+        <li class="page-2">
+            <section class="hot-top-logo-wrapper">
+                <div class="hot-top-logo">
+                    <div class="logo"></div>
+                    <div class="update-date">更新日期：12月05日</div>
+                </div>
+            </section>
+            <section class="hot-songs">
+                <ol id=hotSongList class="list">
+                </ol>
+            </section>
+            <section class="hot-bottom">
+                <div class="hot-complete-list">查看完整榜单 &gt;</div>
+            </section>
+        </li>
         <li class="page-3">
             <div class="query">
                 <svg class="icon icon-query" aria-hidden="true">
@@ -177,10 +191,17 @@
 <script src="//at.alicdn.com/t/font_1516937_2n4m2b3rkmi.js"></script>
 <!--查询图标 symbol-->
 <script src="//at.alicdn.com/t/font_1516937_iws1pqj42c9.js"></script>
-<!--查询清楚图标 symbol-->
+<!--查询清除图标 symbol-->
 <script src="//at.alicdn.com/t/font_1516937_q3cvvwczi.js"></script>
 <script src="./vendors/jquery.min.js"></script>
 <script src="./vendors/av-min.js"></script>
+<script>
+    AV.init({
+        appId: "UghkUIe0glx3ogWY1DH6bYaD-gzGzoHsz",
+        appKey: "vOalUXiLgGIxynV6rEk6nr2n",
+        serverURLs: "https://ughkuie0.lc-cn-n1-shared.com"
+    });
+</script>
 <!--tab 切换-->
 <script>
     $('.tabs').on('click', 'li', function (e) {
@@ -189,49 +210,11 @@
         $li.addClass('active').siblings().removeClass('active');
         let content = $('.tab-content').children().eq(index);
         content.addClass('active').siblings().removeClass('active');
-    });
-</script>
 
-<!--最新音乐-->
-<script>
-    $songList = $('ol#songList');
-
-    AV.init({
-        appId: "UghkUIe0glx3ogWY1DH6bYaD-gzGzoHsz",
-        appKey: "vOalUXiLgGIxynV6rEk6nr2n",
-        serverURLs: "https://ughkuie0.lc-cn-n1-shared.com"
-    });
-
-    /*var SongObject = AV.Object.extend('Song');
-    var songObject = new SongObject();
-      songObject.set('name', '明明');
-      songObject.set('singer', '摩登兄弟刘宇宁');
-      songObject.set('album', '明明');
-      songObject.set('url', 'http://q1as5dm34.bkt.clouddn.com/%E6%98%8E%E6%98%8E.m4a');
-      songObject.save().then(function (testObject) {
-          alert('保存成功。')
-      })*/
-
-    var songQuery = new AV.Query('Song');
-    songQuery.find().then(function (songs) {
-        $('#songListLoading').remove();
-        for (let i = 0; i < songs.length; i++) {
-            const {name, singer, album, url} = songs[i].attributes;
-            const liString = `
-                    <li>
-                        <h3>${name}</h3>
-                        <p><i></i> ${singer} - ${album}</p>
-                        <a href=${url} target="_blank">
-                            <svg class="icon icon-play" aria-hidden="true">
-                                <use xlink:href="#icon-play"></use>
-                            </svg>
-                        </a>
-                    </li>
-            `;
-            $songList.append(liString);
+        // 热歌榜 查询热歌数据
+        if (index === 1) {
+            queryHotSongs();
         }
-    }).catch(function (error) {
-        console.error(error);
     });
 </script>
 
@@ -264,6 +247,84 @@
     }).catch(function (error) {
         console.error(error);
     });
+</script>
+
+<!--最新音乐-->
+<script>
+    $songList = $('ol#songList');
+
+    /*var SongObject = AV.Object.extend('Song');
+    var songObject = new SongObject();
+      songObject.set('name', '明明');
+      songObject.set('singer', '摩登兄弟刘宇宁');
+      songObject.set('album', '明明');
+      songObject.set('url', 'http://q1as5dm34.bkt.clouddn.com/%E6%98%8E%E6%98%8E.m4a');
+      songObject.save().then(function (testObject) {
+          alert('保存成功。')
+      })*/
+
+    var songQuery = new AV.Query('Song');
+    songQuery.find().then(function (songs) {
+        $('#songListLoading').remove();
+        for (let i = 0; i < songs.length; i++) {
+            const {name, singer, album, url} = songs[i].attributes;
+            const liString = `
+                    <li>
+                        <h3>${name}</h3>
+                        <p><i></i> ${singer} - ${album}</p>
+                        <a href="${url}" target="_blank">
+                            <svg class="icon icon-play" aria-hidden="true">
+                                <use xlink:href="#icon-play"></use>
+                            </svg>
+                        </a>
+                    </li>
+            `;
+            $songList.append(liString);
+        }
+    }).catch(function (error) {
+        console.error(error);
+    });
+</script>
+
+<!--查询热歌数据-->
+<script>
+    function queryHotSongs() {
+        $hotSongList = $('ol#hotSongList');
+        $hotSongList.empty();
+        $hotSongList.append(`
+            <div id="hotSongListLoading" class="loading">
+                <img src="./vendors/svg-css-loaders/audio.svg"/>
+            </div>
+        `);
+
+        var songQuery = new AV.Query('Song');
+        songQuery.equalTo('hot', true);
+        songQuery.find().then(function (songs) {
+            $('#hotSongListLoading').remove();
+            for (let i = 0; i < songs.length; i++) {
+                const {name, singer, album, url} = songs[i].attributes;
+                const liString = `
+                    <li>
+                        <div class="${(i + 1) < 4 ? 'number top' : 'number'}">
+                            ${(i + 1).toString().padStart(2, '0')}
+                        </div>
+                        <div class="hot-songs-li-wrapper">
+                            <h3>${name}</h3>
+                            <p><i></i> ${singer} - ${album}</p>
+                            <a href="${url}" target="_blank">
+                                <svg class="icon icon-play" aria-hidden="true">
+                                    <use xlink:href="#icon-play"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </li>
+            `;
+                $hotSongList.append(liString);
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
 </script>
 
 <!--搜索-->
@@ -312,7 +373,7 @@
                     <li>
                         <h3>${name}</h3>
                         <p><i></i> ${singer} - ${album}</p>
-                        <a href=${url} target="_blank">
+                        <a href="${url}" target="_blank">
                             <svg class="icon icon-play" aria-hidden="true">
                                 <use xlink:href="#icon-play"></use>
                             </svg>

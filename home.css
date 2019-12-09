@@ -159,7 +159,7 @@ section.playlists > ol > li p {
     border-bottom: 1px solid #f0f0f1;
 }
 
-.list li > a {
+.list li a {
     position: absolute;
     right: 0.2667rem;
     top: 50%;
@@ -251,6 +251,87 @@ section.art .copyright {
     display: block;
 }
 
+/*热歌榜*/
+.tab-content .page-2 .hot-top-logo-wrapper {
+    background: transparent url("//s3.music.126.net/mobile-new/img/hot_music_bg_2x.jpg?f01a252389c26bcf016816242eaa6aee=");
+    background-size: cover;
+    position: relative;
+    padding-top: 38.9%;
+}
+
+.tab-content .page-2 .hot-top-logo-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.tab-content .page-2 .hot-top-logo {
+    padding: 0.7056rem 0 0.7056rem 0.533rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.page-2 .logo {
+    background: transparent url("//s3.music.126.net/mobile-new/img/index_icon_2x.png?5207a28c3767992ca4bb6d4887c74880=") no-repeat -0.64rem -0.8rem;
+    width: 3.787rem;
+    height: 1.787rem;
+    background-size: 4.453rem 2.589rem;
+}
+
+.page-2 .update-date {
+    margin-top: 0.267rem;
+    font-size: 0.32rem;
+    color: white;
+}
+
+.page-2 .hot-songs .loading {
+    padding: 2.4rem 0;
+}
+
+.page-2 .hot-songs li {
+    margin-left: 0;
+    padding: 0;
+    border: none;
+}
+
+.page-2 .hot-songs .hot-songs-li-wrapper {
+    margin-left: 1.067rem;
+    padding: 0.1707rem 0;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.page-2 .hot-songs .hot-songs-li-wrapper h3, .page-2 .hot-songs .hot-songs-li-wrapper p {
+    width: 7.8187rem;
+}
+
+.page-2 .hot-songs .number {
+    position: absolute;
+    left: 0.533rem;
+    top: 0.7387rem;
+    transform: translateY(-50%) translateX(-50%);
+    line-height: 0.68rem;
+    font-size: 0.4533rem;
+    color: #888888;
+}
+
+.page-2 .hot-songs .number.top {
+    color: #df3436;
+}
+
+.page-2 .hot-bottom {
+    padding: 0.4773rem;
+    text-align: center;
+    color: #888888;
+    font-family: Helvetica, sans-serif, STHeiTi;
+}
+
 /*搜索*/
 .tab-content li.page-3::before {
     content: '';
@@ -260,17 +341,17 @@ section.art .copyright {
 .tab-content li.page-3 .query {
     text-align: center;
     position: relative;
-    width: 355.2px;
-    padding: 0 30px;
-    margin: 15px auto;
-    border-radius: 15px;
+    width: 9.472rem;
+    padding: 0 0.8rem;
+    margin: 0.4rem auto;
+    border-radius: 0.4rem;
     background-color: #ebecec;
 }
 
 .tab-content li.page-3 input {
     border: none;
     outline: none;
-    padding: 7px 0;
+    padding: 0.187rem 0;
     width: 100%;
     background-color: inherit;
 }
@@ -281,11 +362,11 @@ section.art .copyright {
 
 .tab-content li.page-3 .query .icon-query {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 0.4rem;
+    left: 0.4rem;
     transform: translateX(-50%) translateY(-50%);
-    width: 13px;
-    height: 13px;
+    width: 0.347rem;
+    height: 0.247rem;
     color: #cfcfd0;
 }
 
@@ -296,10 +377,10 @@ section.art .copyright {
 .tab-content li.page-3 .query .icon-gary.active {
     display: block;
     position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 15px;
-    right: 15px;
+    width: 0.427rem;
+    height: 0.427rem;
+    top: 0.4rem;
+    right: 0.4rem;
     transform: translateX(50%) translateY(-50%);
 }
 
