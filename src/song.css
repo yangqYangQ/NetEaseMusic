@@ -60,10 +60,13 @@
 }
 
 .page .song-disc .song-image {
-    background: transparent url("//p1.music.126.net/st48Y3J3VFEM7n4LthlJQw==/109951163448758902.jpg") no-repeat;
     width: 68.971vw;
     height: 68.971vw;
-    background-size: cover;
+}
+
+.page .song-disc .song-image img {
+    width: 100%;
+    height: auto;
     border-radius: 50%;
 }
 
@@ -102,10 +105,16 @@
     position: absolute;
     top: 104.307vw;
     font-size: 4.267vw;
+    width: 81.387vw;
+    left: 50vw;
+    transform: translateX(-50%);
 }
 
 .page .song-info .song-singer {
     font-size: 4.8vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .song-singer span {

@@ -42,7 +42,7 @@ c4.271-0.012,7.729-3.47,7.74-7.74V7.74C33.989,3.47,30.53,0.011,26.26,0"></path>
         </svg>
     </div>
     <div class="song-info">
-        <div class="song-singer">Haunt U - <span>mysticphonk/Lil Peep</span></div>
+        <div class="song-singer"></div>
         <div class="song-lyric">
             <span>My time is here and I'm making it clear</span>
             <span>我的时间所剩无几，而我想在此把话挑明</span>
@@ -66,12 +66,39 @@ c4.271-0.012,7.729-3.47,7.74-7.74V7.74C33.989,3.47,30.53,0.011,26.26,0"></path>
         serverURLs: "https://ughkuie0.lc-cn-n1-shared.com"
     });
 </script>
+<!--取 url 查询参数值-->
+<script>
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+</script>
 <!--播放 暂停-->
 <script>
-    let $songDisc = $('.song-disc')
+    let $songDisc = $('.song-disc');
     $songDisc.on('click', function () {
         $songDisc.children('.song-image').toggleClass('paused');
         $songDisc.children('.icon-play').toggleClass('hide');
+        audio.paused ? audio.play() : audio.pause();
+    });
+</script>
+<script>
+    var query = new AV.Query('Song');
+    let audio = document.createElement('audio');
+    let id = getParameterByName('id');
+    query.get(id).then(function (song) {
+        const {singer, name, url, image} = song.attributes;
+
+        $('.song-info .song-singer').empty().append(`${name} - <span>${singer}</span>`);
+        $('.song-disc .song-image').empty().append(`<img src=${image} alt="封面">`);
+
+        audio.src = url + '';
+        $('.song-disc').click();
     });
 </script>
 </body>

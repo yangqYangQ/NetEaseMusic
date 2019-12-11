@@ -303,6 +303,7 @@
         songQuery.find().then(function (songs) {
             $('#hotSongListLoading').remove();
             for (let i = 0; i < songs.length; i++) {
+                const {id} = songs[i];
                 const {name, singer, album, url} = songs[i].attributes;
                 const liString = `
                     <li>
@@ -312,7 +313,7 @@
                         <div class="hot-songs-li-wrapper">
                             <h3>${name}</h3>
                             <p><i></i> ${singer} - ${album}</p>
-                            <a href="${url}" target="_blank">
+                            <a href="song.html?id=${id}">
                                 <svg class="icon icon-play" aria-hidden="true">
                                     <use xlink:href="#icon-play"></use>
                                 </svg>
@@ -369,12 +370,13 @@
         query.find().then(function (songs) {
             $('#queryLoading').remove();
             for (let i = 0; i < songs.length; i++) {
+                const {id} = songs[i];
                 const {name, singer, album, url} = songs[i].attributes;
                 const liString = `
                     <li>
                         <h3>${name}</h3>
                         <p><i></i> ${singer} - ${album}</p>
-                        <a href="${url}" target="_blank">
+                        <a href="song.html?id=${id}">
                             <svg class="icon icon-play" aria-hidden="true">
                                 <use xlink:href="#icon-play"></use>
                             </svg>
