@@ -8,11 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>播放</title>
     <link rel="stylesheet" href="./dist/reset.css">
-    <link rel="stylesheet" href="./src/song.css">
+    <link rel="stylesheet" href="./dist/song.css">
 </head>
 
 <body>
 <div class="page">
+    <div class="background-img"></div>
     <div class="logo">
         <svg class="u-svg u-svg-logosong" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 184 34">
             <g fill="#fff">
@@ -43,10 +44,7 @@ c4.271-0.012,7.729-3.47,7.74-7.74V7.74C33.989,3.47,30.53,0.011,26.26,0"></path>
     </div>
     <div class="song-info">
         <div class="song-singer"></div>
-        <div class="song-lyric">
-            <span>My time is here and I'm making it clear</span>
-            <span>我的时间所剩无几，而我想在此把话挑明</span>
-        </div>
+        <div class="song-lyric"></div>
         <div class="complete-lyric">查看完整歌词 &gt;</div>
         <div class="lyric-logo"><i></i></div>
     </div>
@@ -84,7 +82,13 @@ c4.271-0.012,7.729-3.47,7.74-7.74V7.74C33.989,3.47,30.53,0.011,26.26,0"></path>
     $songDisc.on('click', function () {
         $songDisc.children('.song-image').toggleClass('paused');
         $songDisc.children('.icon-play').toggleClass('hide');
-        audio.paused ? audio.play() : audio.pause();
+        if (audio.paused) {
+            lyricInterval();
+            audio.play()
+        } else {
+            clearInterval(intervalID);
+            audio.pause();
+        }
     });
 </script>
 <script>
@@ -92,13 +96,66 @@ c4.271-0.012,7.729-3.47,7.74-7.74V7.74C33.989,3.47,30.53,0.011,26.26,0"></path>
     let audio = document.createElement('audio');
     let id = getParameterByName('id');
     query.get(id).then(function (song) {
-        const {singer, name, url, image} = song.attributes;
+        const {singer, name, url, image, lyric} = song.attributes;
 
         $('.song-info .song-singer').empty().append(`${name} - <span>${singer}</span>`);
         $('.song-disc .song-image').empty().append(`<img src=${image} alt="封面">`);
+        $('.page .background-img').css('background-image', `url(${image})`);
 
         audio.src = url + '';
+        analyseLyric(lyric);
         $('.song-disc').click();
+    });
+</script>
+<!--歌词分析-->
+<script>
+    let intervalID = null;
+    let arr = [];
+
+    function analyseLyric(lyric) {
+        let parts = lyric.split('\n');
+        parts.forEach(function (string) {
+            let str = string.split(']');
+            str[0] = str[0].substring(1);
+            let matches = str[0].match(/(\d+):([\d\.]+)/);
+            let minute = +matches[1];
+            let seconds = +matches[2];
+            arr.push({
+                time: minute * 60 + seconds,
+                lyric: str[1]
+            });
+        });
+    }
+
+    function lyricInterval() {
+        intervalID = setInterval(function () {
+            let currentTime = audio.currentTime;
+            for (let i = 0; i < arr.length; i++) {
+                if (i === arr.length - 1) {
+                    showLyric(arr[i].lyric);
+                } else if (currentTime >= arr[i].time && currentTime < arr[i + 1].time) {
+                    showLyric(arr[i].lyric, arr[i + 1].lyric);
+                    break;
+                }
+            }
+        }, 500);
+    }
+
+    function showLyric(lyric1, lyric2 = '') {
+        $('.song-info .song-lyric').empty().append(
+            `
+                <span>${lyric1}</span>
+                <span>${lyric2}</span>
+            `);
+    }
+</script>
+<!--歌曲播放结束-->
+<script>
+    $(audio).on('ended', function () {
+        clearInterval(intervalID);
+        $songDisc.children('.song-image').toggleClass('paused');
+        $songDisc.children('.icon-play').toggleClass('hide');
+        audio.currentTime = 0;
     });
 </script>
 </body>

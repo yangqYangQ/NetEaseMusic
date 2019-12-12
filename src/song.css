@@ -4,9 +4,8 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.page::before {
-    content: '';
-    background: transparent url("//p1.music.126.net/st48Y3J3VFEM7n4LthlJQw==/109951163448758902.jpg") no-repeat center;
+.page .background-img {
+    background: transparent no-repeat center;
     position: absolute;
     left: 0;
     top: 0;
@@ -14,7 +13,7 @@
     bottom: 0;
     background-size: cover;
     z-index: -1;
-    filter: blur(40px);
+    filter: blur(10px);
 }
 
 .page .logo {
@@ -124,15 +123,23 @@
 
 .song-lyric {
     margin-top: 3.733vw;
+    height: 15.36vw;
+    overflow: hidden;
 }
 
 .song-lyric span {
     display: inline-block;
+    width: 100%;
+    padding-bottom: 2.133vw;
+}
+
+.song-lyric span:nth-child(2) {
+    color: hsla(0, 0%, 100%, .6);
 }
 
 .complete-lyric {
     padding: 1.333vw 0;
-    margin-top: 25.333vw;
+    margin-top: 19.333vw;
     color: hsla(0, 0%, 100%, .6);
 }
 
